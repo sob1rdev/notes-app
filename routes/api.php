@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types=1);
+require 'src/Router.php';
+require 'src/Notes.php';
 
 $router = new Router();
-$note   = new Notes();
+$note   = new API();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $router->sendResponse($note->getAll());
