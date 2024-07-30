@@ -1,81 +1,69 @@
 # Notes App
 
-## Loyiha Haqida
-Bu loyiha oddiy eslatmalar ilovasidir, PHP va MySQL yordamida ishlab chiqilgan. Foydalanuvchilar eslatmalar qo'shish, tahrirlash va o'chirish imkoniyatiga ega.
+## Project Overview
 
-## O'rnatish
+The Notes App is a simple and effective note management system that allows users to create, edit, and delete notes. It also integrates with a Telegram bot for convenient note management through Telegram.
 
-### Talablar
-- PHP 7.4 yoki undan yuqori
-- MySQL
-- Apache yoki Nginx
+## Features
 
-### O'rnatish Bosqichlari
+- **Add Notes**: Easily add new notes via the web interface or Telegram bot.
+- **Edit Notes**: Modify existing notes with a simple user interface or Telegram commands.
+- **Delete Notes**: Remove notes using the web interface or Telegram bot.
+- **List Notes**: View all your notes directly from Telegram or through the web interface.
 
-1. **Loyihani klonlash:**
-   ```bash
-   git clone https://github.com/username/repository.git
-2. **Ma'lumotlar bazasini sozlash:
+## Technologies Used
 
-db.php faylini oching va ma'lumotlar bazasiga ulanish uchun quyidagi o'zgaruvchilarni sozlang:   
-```<?php
-$servername = "localhost";
-$username = "sobirjon";
-$password = "4061";
-$dbname = "notes_db";
+- **PHP**: Server-side scripting language.
+- **MySQL**: Database management system.
+- **HTML/CSS**: For the user interface.
+- **Telegram Bot API**: For interacting with the application via Telegram.
 
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
-?>
-```
-3. **Ma'lumotlar bazasini yaratish:
+## Installation
 
-MySQL serveriga kirib, quyidagi SQL kodlarni bajarib, notes_db ma'lumotlar bazasini va notes jadvalini yarating:
-```bash
-CREATE DATABASE notes_db;
-USE notes_db;
+1. **Set Up PHP and MySQL:**
+   - Ensure you have PHP and MySQL installed on your server.
 
-CREATE TABLE notes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL
-);
-```
-4. Veb-serverni ishga tushirish:
+2. **Database Configuration:**
+   - Create a MySQL database and configure the connection settings in the `src/config.php` file.
 
-Apache yoki Nginx serverini ishga tushiring va loyihaning joriy papkasini serverning hujjat ildiziga sozlang.
+3. **Upload Files:**
+   - Upload the project files to your web server.
 
-### Foydalanish
-*Eslatma qo'shish:
-Asosiy sahifada, Title va Description maydonlarini to'ldiring va "Add Note" tugmasini bosing.
+4. **Telegram Bot Setup:**
+   - Create a new bot on Telegram and obtain your bot token.
+   - Configure the `bot/bot.php` file with your bot token.
+   - Deploy the `bot.php` script on a server capable of handling webhook requests from Telegram.
 
-*Eslatmani tahrirlash:
-"Edit" tugmasini bosib, modal oynada eslatma ma'lumotlarini tahrir qiling, so'ngra "Update Note" tugmasini bosing.
+5. **Run the Application:**
+   - Access the web interface through `index.php` to start managing your notes.
 
-*Eslatmani o'chirish:
-"Delete" tugmasini bosib, eslatmani o'chiring.
+## Usage
 
-### API Router
-/api/notes - Eslatmalar ro'yxatini olish yoki yangi eslatma qo'shish.
+### Web Interface
 
-*GET: Eslatmalar ro'yxatini olish.
-POST: Yangi eslatma qo'shish.
-/api/notes/{id} - Ma'lum bir eslatmani olish, yangilash yoki o'chirish.
+- **Add a Note:** Use the form on `index.php` to create a new note.
+- **Edit a Note:** Click the edit button next to a note to modify its content.
+- **Delete a Note:** Click the delete button next to a note to remove it.
 
-*GET: Eslatmani olish.
-*PUT: Eslatmani yangilash.
-*DELETE: Eslatmani o'chirish.
 ### Telegram Bot
-Telegram bot yordamida eslatmalarni boshqarish imkoniyatlarini qo'shish mumkin. Bot yordamida eslatma qo'shish, tahrirlash va o'chirish mumkin bo'ladi. Telegram bot API hujjatlari va token olish uchun Telegram BotFather ga murojaat qiling.
 
-### Hissalar
-Agar siz ushbu loyihaga hissa qo'shmoqchi bo'lsangiz, iltimos, issues bo'limida xabar qoldiring yoki pull requests yuboring.
+- **Add a Note:** Send `/add_note <note_content>` to the bot to add a new note.
+- **Edit a Note:** Send `/edit_note <note_id> <new_content>` to update an existing note.
+- **Delete a Note:** Send `/delete_note <note_id>` to remove a note.
+- **List Notes:** Send `/list_notes` to see all your notes.
 
-###Litsenziya
-```
-Loyiha MIT litsenziyasi ostida tarqatiladi. Batafsil ma'lumot uchun LICENSE faylini ko'ring.
-```
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request with your improvements or bug fixes.
+
+## Author
+
+[Your Name] - Author
+
+## License
+
+This project is licensed under the [License Name] License. See the `LICENSE` file for details.
+
+## Repository
+
+[GitHub Repository](https://github.com/sob1rdev/notes-app)
