@@ -1,15 +1,17 @@
 <?php
 declare(strict_types=1);
+namespace App;
 
 use GuzzleHttp\Client;
-use PDO;
+use App\DB;
+use App\Notes;
 
 class Bot
 {
     private const TOKEN = "7247419216:AAFhEMoTi5Two1IHqkn8EKsUZr0Q-7Sqz04";
     private const API = "https://api.telegram.org/bot" . self::TOKEN . "/";
     private Client $http;
-    private PDO $pdo;
+    private \PDO $pdo;
 
     public function __construct()
     {
@@ -30,18 +32,18 @@ class Bot
             ]
         ];
         $replyMarkup = json_encode($keyboard);
-        $this->sendMessage($chatId, "taskingizni kiriting:", $replyMarkup);
+        $this->sendMessage($chatId, "Taskingizni kiriting:", $replyMarkup);
     }
 
     public function addTask(string $text, int $chatId): void
     {
-        $task = new Task();
-        $task->add($text);
+        $task = new Notes();
+        $task->addNotes($text, $chatId); // chatId qo'shildi
         $this->sendMessage($chatId, "Yangi task qoshildi: $text");
     }
-    public function handleEditCommand($chatId, $messageText): void
-    {
 
+    public function handleEditCommand(int $chatId, string $messageText): void
+    {
         if (preg_match('/\/edit (\d+) (.+)/', $messageText, $matches)) {
             $taskId = (int)$matches[1];
             $newText = $matches[2];
@@ -81,15 +83,16 @@ class Bot
     private function sendTaskList(int $chatId, string $message, bool $includeCheckboxes): void
     {
         $task = new Notes();
-        $tasks = $task->getnotes($chatId);
+        $tasks = $task->getNotes($chatId);
 
         $text = 'No tasks available.';
         $keyboard = ['inline_keyboard' => []];
 
         if (!empty($tasks)) {
-            $text = ''; // Clear default message if tasks exist
+            $text = '';
 
             foreach ($tasks as $task) {
+                $text .= "Task ID: {$task['id']}, Text: {$task['text']}\n"; // Task matnini ko'rsatish
                 if ($includeCheckboxes) {
                     $keyboard['inline_keyboard'][] = [
                         ['text' => "Delete Task {$task['id']}", 'callback_data' => "delete_task_{$task['id']}"]
