@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types=1);
+require 'src/DB.php';
 
-class Notes
+class API
 {
     private PDO $pdo;
 
